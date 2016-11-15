@@ -6,6 +6,11 @@ module.exports = function(description, baseDamageAmount) {
                 source: source,
                 damageAfterReduction: damageAfterReduction
             })
+        },
+        summarise: function() {
+            reductions.reduce(reduction => {
+
+            }, baseDamageAmount)
         }
     }
 }
