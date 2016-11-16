@@ -1,7 +1,7 @@
 const Hit = require('../Hit');
 
 module.exports = function createParser(line) {
-    const newTypeRegex = new RegExp(/Damage:\s([0-9]+\.[0-9]+)\sTarget\s([\w\-]+)\s/);
+    const newTypeRegex = new RegExp(/Damage:\s(\-?[0-9]+\.[0-9]+)\sTarget\s([\w\-]+)\s/);
     const newHitRegex = new RegExp(/Local Player:Damage/);
     const newReductionRegex = new RegExp(/Damage:\s([0-9]+\.[0-9]+)\s\(Reduction: ([0-9]+\.[0-9]+)\s\-\s([0-9]+\.[0-9]+)\sPercentage\)\s\-[\w\s]+(armor|skills|shield)/);
     let currentHit = new Hit();
@@ -20,7 +20,8 @@ module.exports = function createParser(line) {
             if(newType && newType.length) {
                 currentHit.closeType();
                 const damage = parseFloat(newType[1]);
-                const type = newType[2];
+                let type = newType[2];
+                if(damage < 0) type = 'Heal'
                 currentHit.regesterType(type, damage);
                 return;
             }

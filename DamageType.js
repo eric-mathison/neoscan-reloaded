@@ -1,4 +1,21 @@
+const colors = require('colors');
+
 module.exports = function(description, baseDamageAmount) {
+    const reductionColours = {
+        shield: 'cyan',
+        armor: 'green',
+        skills: 'blue'
+    }
+    const typeColours = {
+        Piercing: 'red',
+        Force: 'red',
+        Fire: 'orange',
+        Energy: 'blue',
+        "X-ray": 'teal',
+        "X-Ray": 'teal',
+        Poison: 'green',
+        Heal: 'yellow'
+    }
     const reductions = [];
     let damageAfterReduction = 0;
     let capReached = false;
@@ -6,7 +23,7 @@ module.exports = function(description, baseDamageAmount) {
         regesterReduction: function (source, damageAfterReduction, totalPercentage) {
             if(capReached) return;
             if(totalPercentage > 80) {
-                damageAfterReduction = Math.floor(baseDamageAmount * (20)/100)
+                damageAfterReduction = Math.round(baseDamageAmount * (20)/100)
                 capReached = true;
             }
             reductions.push({
@@ -14,7 +31,7 @@ module.exports = function(description, baseDamageAmount) {
                 damageAfterReduction: damageAfterReduction
             })
         },
-        summarise: function() {
+        summarise: function(table) {
             reductions.reduce((lastReduction, reduction) => {
                 reduction.reducedDamageBy = lastReduction - reduction.damageAfterReduction;
                 return reduction.damageAfterReduction;
@@ -23,9 +40,14 @@ module.exports = function(description, baseDamageAmount) {
             const reducedDamage = reductions.reduce((total, reduction) => total + reduction.reducedDamageBy, 0);
 
             const reductionsMessage = reductions.map(reduction => {
-                return `${reduction.source} -${reduction.reducedDamageBy}`;
-            })
-            return `${baseDamageAmount-reducedDamage}/${baseDamageAmount} ${description} Damage \t| ${reductionsMessage}`
+                return `${reduction.source} ${reduction.reducedDamageBy} (${Math.round(reduction.reducedDamageBy/reducedDamage*100)}%)`[reductionColours[reduction.source]];
+            }).join(' ');
+            table.push([
+                `${baseDamageAmount-reducedDamage}`[typeColours[description]],
+                `${baseDamageAmount}`[typeColours[description]],
+                `${description}`[typeColours[description]],
+                reductionsMessage
+            ]);
         }
     }
 }

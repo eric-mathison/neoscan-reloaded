@@ -1,19 +1,25 @@
 const DamageType = require('./DamageType');
+const Table = require('cli-table');
 
 module.exports = function() {
-    const types = [];
+    let numberOfTypes = 0;
     let currentType = 0;
+    const table = new Table({
+        head: ['Damage Taken', 'Maximum Damage', 'Type', 'Resistance Breakdown'],
+        colWidths: [15, 20, 15, 60]
+    })
 
     function closeType() {
         if(currentType) {
-            types.push(currentType.summarise());
+            numberOfTypes++;
+            currentType.summarise(table);
             currentType = 0;
         }
     }
 
     function log() {
         closeType();
-        types.map(type => console.log(type));
+        if(numberOfTypes > 0) console.log(table.toString());
     }
     const logTimeout = setTimeout(log, 500);
 

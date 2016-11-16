@@ -1,7 +1,6 @@
 const program = require('commander');
 const watch = require('./analyse/liveScan')().watchLogFile;
 const scanner = require('./analyse/scan')();
-const colors = require('colors');
 
 program
     .command('watch <name> [path]')
@@ -17,7 +16,6 @@ program
     .command('dumbscan <name> [path]')
     .description(`Scans an existing neocron log file and exits`)
     .action(scanner.dumb)
-
 
 program
   .parse(process.argv)
