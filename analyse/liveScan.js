@@ -1,3 +1,4 @@
+'use strict'
 const Tail = require('tail').Tail
 const LineParser = require('./lineParser');
 const crash = require('../crash');

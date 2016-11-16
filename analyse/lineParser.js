@@ -1,3 +1,4 @@
+'use strict'
 const Hit = require('../Hit');
 
 module.exports = function createParser(line) {

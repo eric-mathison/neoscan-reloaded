@@ -1,3 +1,4 @@
+'use strict'
 const DamageType = require('./DamageType');
 const Table = require('cli-table');
 

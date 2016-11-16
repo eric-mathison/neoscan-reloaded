@@ -1,3 +1,4 @@
+'use strict'
 const fs = require('fs');
 const LineParser = require('./lineParser');
 const crash = require('../crash');

@@ -1,3 +1,4 @@
+'use strict'
 const program = require('commander');
 const watch = require('./analyse/liveScan')().watchLogFile;
 const scanner = require('./analyse/scan')();
