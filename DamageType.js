@@ -6,13 +6,13 @@ module.exports = function(description, baseDamageAmount, classCap) {
     const reductionColours = {
         shield: 'cyan',
         armor: 'green',
-        skills: 'blue'
+        skills: 'yellow'
     }
     const typeColours = {
         Piercing: 'white',
         Force: 'grey',
         Fire: 'red',
-        Energy: 'blue',
+        Energy: 'bgBlue',
         "X-ray": 'cyan',
         "X-Ray": 'cyan',
         Poison: 'green',
