@@ -1,6 +1,7 @@
 const colors = require('colors');
 
-module.exports = function(description, baseDamageAmount) {
+module.exports = function(description, baseDamageAmount, classCap) {
+    classCap = classCap || 80
     const reductionColours = {
         shield: 'cyan',
         armor: 'green',
@@ -20,10 +21,10 @@ module.exports = function(description, baseDamageAmount) {
     let damageAfterReduction = 0;
     let capReached = false;
     return {
-        regesterReduction: function (source, damageAfterReduction, totalPercentage) {
+        registerReduction: function (source, damageAfterReduction, totalPercentage) {
             if(capReached) return;
-            if(totalPercentage > 80) {
-                damageAfterReduction = Math.round(baseDamageAmount * (20)/100)
+            if(totalPercentage >= classCap) {
+                damageAfterReduction = Math.round(baseDamageAmount * (100-classCap)/100)
                 capReached = true;
             }
             reductions.push({
@@ -33,21 +34,23 @@ module.exports = function(description, baseDamageAmount) {
         },
         summarise: function(table) {
             reductions.reduce((lastReduction, reduction) => {
-                reduction.reducedDamageBy = lastReduction - reduction.damageAfterReduction;
+                const damageAfterThisReduction = lastReduction - reduction.damageAfterReduction;
+                reduction.reducedDamageBy = damageAfterThisReduction;
                 return reduction.damageAfterReduction;
             }, baseDamageAmount);
 
             const reducedDamage = reductions.reduce((total, reduction) => total + reduction.reducedDamageBy, 0);
 
             const reductionsMessage = reductions.map(reduction => {
-                return `${reduction.source} ${reduction.reducedDamageBy} (${Math.round(reduction.reducedDamageBy/reducedDamage*100)}%)`[reductionColours[reduction.source]];
+                return `${reduction.source} ${reduction.reducedDamageBy.toFixed(2)} (${(reduction.reducedDamageBy/reducedDamage*100).toFixed(0)}%)`[reductionColours[reduction.source]];
             }).join(' ');
             table.push([
-                `${baseDamageAmount-reducedDamage}`[typeColours[description]],
-                `${baseDamageAmount}`[typeColours[description]],
-                `${reducedDamage}`[typeColours[description]],
+                `${(baseDamageAmount-reducedDamage).toFixed(2)}`[typeColours[description]],
+                `${baseDamageAmount.toFixed(2)}`[typeColours[description]],
+                `${reducedDamage.toFixed(2)}`[typeColours[description]],
                 `${description}`[typeColours[description]],
-                reductionsMessage
+                reductionsMessage,
+                capReached
             ]);
         }
     }

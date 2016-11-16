@@ -25,4 +25,5 @@ program
     .option('-p, --poison', 'filter out poison results')
     .option('-e, --energy', 'filter out energy results')
     .option('-x, --xray', 'filter out xray results')
+    .option('--cap [value]', 'overrides cap with value, defaults to 80')
     .parse(process.argv)

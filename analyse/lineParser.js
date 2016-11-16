@@ -16,7 +16,7 @@ module.exports = function createParser(line) {
 
             if(newHitRegex.test(line)) {
                 currentHit.close();
-                currentHit = new Hit();
+                currentHit = new Hit(parseInt(options.cap));
                 return;
             }
 
