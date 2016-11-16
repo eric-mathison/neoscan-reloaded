@@ -6,8 +6,12 @@ module.exports = function createParser(line) {
     const newReductionRegex = new RegExp(/Damage:\s([0-9]+\.[0-9]+)\s\(Reduction: ([0-9]+\.[0-9]+)\s\-\s([0-9]+\.[0-9]+)\sPercentage\)\s\-[\w\s]+(armor|skills|shield)/);
     let currentHit = new Hit();
 
+    function typeIsFilteredOut(type, options) {
+        return Object.keys(options).reduce((result, filter) => result || filter === type.toLowerCase(), false);
+    }
+
     return {
-        parse: function (line) {
+        parse: function (options, line) {
             if(line.startsWith('Character System: Acceleration ')) return;
 
             if(newHitRegex.test(line)) {
@@ -18,10 +22,11 @@ module.exports = function createParser(line) {
 
             const newType = newTypeRegex.exec(line);
             if(newType && newType.length) {
-                currentHit.closeType();
                 const damage = parseFloat(newType[1]);
                 let type = newType[2];
-                if(damage < 0) type = 'Heal'
+                if(damage < 0) type = 'Healing'
+                if(typeIsFilteredOut(type, options)) return;
+                currentHit.closeType();
                 currentHit.regesterType(type, damage);
                 return;
             }

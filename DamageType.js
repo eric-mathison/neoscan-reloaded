@@ -7,14 +7,14 @@ module.exports = function(description, baseDamageAmount) {
         skills: 'blue'
     }
     const typeColours = {
-        Piercing: 'red',
-        Force: 'red',
-        Fire: 'orange',
+        Piercing: 'white',
+        Force: 'grey',
+        Fire: 'red',
         Energy: 'blue',
-        "X-ray": 'teal',
-        "X-Ray": 'teal',
+        "X-ray": 'cyan',
+        "X-Ray": 'cyan',
         Poison: 'green',
-        Heal: 'yellow'
+        Healing: 'yellow'
     }
     const reductions = [];
     let damageAfterReduction = 0;
@@ -45,6 +45,7 @@ module.exports = function(description, baseDamageAmount) {
             table.push([
                 `${baseDamageAmount-reducedDamage}`[typeColours[description]],
                 `${baseDamageAmount}`[typeColours[description]],
+                `${reducedDamage}`[typeColours[description]],
                 `${description}`[typeColours[description]],
                 reductionsMessage
             ]);

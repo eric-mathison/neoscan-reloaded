@@ -5,8 +5,8 @@ module.exports = function() {
     let numberOfTypes = 0;
     let currentType = 0;
     const table = new Table({
-        head: ['Damage Taken', 'Maximum Damage', 'Type', 'Resistance Breakdown'],
-        colWidths: [15, 20, 15, 60]
+        head: ['Damage Taken', 'Maximum Damage', 'Reduced By', 'Type', 'Resistance Breakdown'],
+        colWidths: [15, 20, 15, 15, 60]
     })
 
     function closeType() {
@@ -19,7 +19,9 @@ module.exports = function() {
 
     function log() {
         closeType();
-        if(numberOfTypes > 0) console.log(table.toString());
+        if(table.length > 0) {
+            console.log(table.toString());
+        }
     }
     const logTimeout = setTimeout(log, 500);
 

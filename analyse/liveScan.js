@@ -6,20 +6,16 @@ const logFile = require('./logFile')
 module.exports = function createLiveScanner() {
     const parser = new LineParser();
 
-    function poll(path) {
+    function poll(options, path) {
         const scan = new Tail(path);
 
-        scan.on('line', lineScanned);
+        scan.on('line', parser.parse.bind(null, options));
         scan.on('error', crash);
     }
 
-    function lineScanned(line) {
-        parser.parse(line);
-    }
-
     return {
-        watchLogFile: function(characterName, path) {
-            poll(logFile(characterName, path));
+        watchLogFile: function(options, characterName, path) {
+            poll(options, logFile(characterName, path));
         }
     }
 }

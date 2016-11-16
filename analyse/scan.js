@@ -16,8 +16,8 @@ module.exports = function scanner() {
     }
 
     return {
-        scan: function(characterName, path) {
-            runScan(characterName, path, parser.parse)
+        scan: function(options, characterName, path) {
+            runScan(characterName, path, parser.parse.bind(null, options))
         },
         dumb: function(characterName, path) {
             runScan(characterName, path, parser.dumb)
