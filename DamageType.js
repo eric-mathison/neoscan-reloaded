@@ -46,10 +46,10 @@ module.exports = function(description, baseDamageAmount, classCap) {
                 return `${reduction.source} ${reduction.reducedDamageBy.toFixed(2)} (${(reduction.reducedDamageBy/reducedDamage*100).toFixed(0)}%)`[reductionColours[reduction.source]];
             }).join(' ');
             table.push([
-                `${(baseDamageAmount-reducedDamage).toFixed(2)}`[typeColours[description]],
-                `${baseDamageAmount.toFixed(2)}`[typeColours[description]],
-                `${reducedDamage.toFixed(2)}`[typeColours[description]],
-                `${description}`[typeColours[description]],
+                `${(baseDamageAmount-reducedDamage).toFixed(2)}`[typeColours[description]] || `${(baseDamageAmount-reducedDamage).toFixed(2)}`,
+                `${baseDamageAmount.toFixed(2)}`[typeColours[description]] || `${baseDamageAmount.toFixed(2)}`,
+                `${reducedDamage.toFixed(2)} (${(reducedDamage/baseDamageAmount*100).toFixed(2)}%)`[typeColours[description]] || `${reducedDamage.toFixed(2)}`,
+                `${description}`[typeColours[description]] || `${description}`,
                 reductionsMessage,
                 capReached
             ]);
