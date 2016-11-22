@@ -2,12 +2,12 @@
 const DamageType = require('./DamageType');
 const Table = require('cli-table');
 
-module.exports = function(classCap) {
+module.exports = function(characterName, classCap) {
     let numberOfTypes = 0;
     let currentType = 0;
     const table = new Table({
         head: ['Damage Taken', 'Maximum Damage', 'Reduced By', 'Type', 'Resistance Breakdown', 'Capped'],
-        colWidths: [15, 20, 15, 15, 60, 15]
+        colWidths: [15, 20, 18, 15, 60, 15]
     })
 
     function closeType() {
@@ -28,7 +28,7 @@ module.exports = function(classCap) {
 
     return {
         regesterType: function(typeName, damage) {
-            currentType = new DamageType(typeName, damage, classCap);
+            currentType = new DamageType(typeName, damage, classCap, characterName);
         },
         reduceType: function (reductionSource, damageAfterReduction, totalPercentage) {
             if(!currentType) return;

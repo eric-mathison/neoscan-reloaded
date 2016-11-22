@@ -1,7 +1,7 @@
 'use strict'
 const Hit = require('../Hit');
 
-module.exports = function createParser(line) {
+module.exports = function createParser() {
     const newTypeRegex = new RegExp(/Damage:\s(\-?[0-9]+\.[0-9]+)\sTarget\s([\w\-]+)\s/);
     const newHitRegex = new RegExp(/Local Player:Damage/);
     const newReductionRegex = new RegExp(/Damage:\s([0-9]+\.[0-9]+)\s\(Reduction: ([0-9]+\.[0-9]+)\s\-\s([0-9]+\.[0-9]+)\sPercentage\)\s\-[\w\s]+(armor|skills|shield)/);
@@ -12,12 +12,12 @@ module.exports = function createParser(line) {
     }
 
     return {
-        parse: function (options, line) {
+        parse: function (options, characterName, line) {
             if(line.startsWith('Character System: Acceleration ')) return;
 
             if(newHitRegex.test(line)) {
                 currentHit.close();
-                currentHit = new Hit(parseInt(options.cap));
+                currentHit = new Hit(characterName, parseInt(options.cap));
                 return;
             }
 
