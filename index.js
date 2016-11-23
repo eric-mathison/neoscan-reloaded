@@ -27,4 +27,5 @@ program
     .option('-e, --energy', 'filter out energy results')
     .option('-x, --xray', 'filter out xray results')
     .option('--cap [value]', 'overrides cap with value, defaults to 80')
+    .option('--dashboard', 'sends data to kibana')
     .parse(process.argv)

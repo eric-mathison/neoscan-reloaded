@@ -2,7 +2,7 @@
 const DamageType = require('./DamageType');
 const Table = require('cli-table');
 
-module.exports = function(characterName, classCap) {
+module.exports = function(characterName, classCap, dashboard) {
     let numberOfTypes = 0;
     let currentType = 0;
     const table = new Table({
@@ -13,7 +13,7 @@ module.exports = function(characterName, classCap) {
     function closeType() {
         if(currentType) {
             numberOfTypes++;
-            currentType.summarise(table);
+            currentType.summarise(table, dashboard);
             currentType = 0;
         }
     }

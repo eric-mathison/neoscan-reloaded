@@ -34,7 +34,7 @@ module.exports = function(description, baseDamageAmount, classCap, characterName
                 damageAfterReduction: damageAfterReduction
             })
         },
-        summarise: function(table) {
+        summarise: function(table, dashboard) {
             reductions.reduce((lastReduction, reduction) => {
                 const damageAfterThisReduction = lastReduction - reduction.damageAfterReduction;
                 reduction.reducedDamageBy = damageAfterThisReduction;
@@ -53,15 +53,17 @@ module.exports = function(description, baseDamageAmount, classCap, characterName
                     percentage: (reduction.reducedDamageBy/reducedDamage*100).toFixed(0)
                 }
             });
-            logging.logInfo('damage type', {
-                damage_taken: (baseDamageAmount-reducedDamage).toFixed(2),
-                total_received: baseDamageAmount.toFixed(2),
-                reduced_by: reducedDamage.toFixed(2),
-                damage_type: description,
-                reductions:reductionsToLog,
-                capped:capReached,
-                character_name: characterName
-            });
+            if(dashboard) {
+                logging.logInfo('damage type', {
+                    damage_taken: (baseDamageAmount-reducedDamage).toFixed(2),
+                    total_received: baseDamageAmount.toFixed(2),
+                    reduced_by: reducedDamage.toFixed(2),
+                    damage_type: description,
+                    reductions:reductionsToLog,
+                    capped:capReached,
+                    character_name: characterName
+                });
+            }
             table.push([
                 `${(baseDamageAmount-reducedDamage).toFixed(2)}`[typeColours[description]] || `${(baseDamageAmount-reducedDamage).toFixed(2)}`,
                 `${baseDamageAmount.toFixed(2)}`[typeColours[description]] || `${baseDamageAmount.toFixed(2)}`,

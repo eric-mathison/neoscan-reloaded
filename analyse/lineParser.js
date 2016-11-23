@@ -17,7 +17,7 @@ module.exports = function createParser() {
 
             if(newHitRegex.test(line)) {
                 currentHit.close();
-                currentHit = new Hit(characterName, parseInt(options.cap));
+                currentHit = new Hit(characterName, parseInt(options.cap), options.dashboard);
                 return;
             }
 
