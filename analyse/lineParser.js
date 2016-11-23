@@ -12,12 +12,12 @@ module.exports = function createParser() {
     }
 
     return {
-        parse: function (options, characterName, line) {
+        parse: function (options, line) {
             if(line.startsWith('Character System: Acceleration ')) return;
 
             if(newHitRegex.test(line)) {
                 currentHit.close();
-                currentHit = new Hit(characterName, parseInt(options.cap), options.dashboard);
+                currentHit = new Hit(parseInt(options.cap));
                 return;
             }
 

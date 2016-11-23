@@ -8,7 +8,6 @@ module.exports = function scanner() {
     const parser = new LineParser();
 
     function runScan(characterName, path, lineRead) {
-        console.log('scanning', logFile(characterName, path));
         const stream = require('readline').createInterface({
             input: fs.createReadStream(logFile(characterName, path))
         });
@@ -18,7 +17,7 @@ module.exports = function scanner() {
 
     return {
         scan: function(options, characterName, path) {
-            runScan(characterName, path, parser.parse.bind(null, options, characterName))
+            runScan(characterName, path, parser.parse.bind(null, options))
         },
         dumb: function(characterName, path) {
             runScan(characterName, path, parser.dumb)
