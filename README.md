@@ -2,6 +2,8 @@
 
 Logging for Neocron Resists
 
+## Pre-requisites
+
 To enable logging add ENABLELOG="TRUE" to your neocron.ini
 
 ## Running
