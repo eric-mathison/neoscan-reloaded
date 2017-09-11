@@ -4,7 +4,7 @@ Logging for Neocron Resists
 
 To enable logging add ENABLELOG="TRUE" to your neocron.ini
 
-##Running
+## Running
 
 To start neoscan run the command:
 
