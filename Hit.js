@@ -28,7 +28,7 @@ module.exports = function(classCap) {
 
     return {
         regesterType: function(typeName, damage) {
-            currentType = new DamageType(typeName, damage, classCap, characterName);
+            currentType = new DamageType(typeName, damage, classCap);
         },
         reduceType: function (reductionSource, damageAfterReduction, totalPercentage) {
             if(!currentType) return;
