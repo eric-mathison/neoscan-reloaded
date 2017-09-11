@@ -1,6 +1,6 @@
 # neoscan
 
-Logging for Neocron Resists
+Logging for Neocron resists
 
 ## Pre-requisites
 
