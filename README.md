@@ -1,6 +1,8 @@
 # neoscan
 
-Logging for Neocron Resists
+Logging for Neocron resists
+
+## Pre-requisites
 
 To enable logging add ENABLELOG="TRUE" to your neocron.ini
 
