@@ -21,7 +21,7 @@ describe('Calculating Resistances', () => {
         })
 
         it('should give the total reduction', () => {
-            results[0][2].should.equal('80.00'.red)
+            results[0][2].should.equal('80.00 (80.00%)'.red)
         })
 
         it('should give the damage type', () => {
@@ -55,7 +55,7 @@ describe('Calculating Resistances', () => {
         })
 
         it('should give the total reduction', () => {
-            results[0][2].should.equal('80.00'.red)
+            results[0][2].should.equal('80.00 (80.00%)'.red)
         })
 
         it('should give the damage type', () => {
@@ -89,7 +89,7 @@ describe('Calculating Resistances', () => {
         })
 
         it('should give the total reduction', () => {
-            results[0][2].should.equal('25.00'.red)
+            results[0][2].should.equal('25.00 (25.00%)'.red)
         })
 
         it('should give the damage type', () => {
@@ -124,7 +124,7 @@ describe('Calculating Resistances', () => {
         })
 
         it('should give the total reduction', () => {
-            results[0][2].should.equal('20.00'.red)
+            results[0][2].should.equal('20.00 (20.00%)'.red)
         })
 
         it('should give the damage type', () => {
@@ -132,7 +132,7 @@ describe('Calculating Resistances', () => {
         })
 
         it('should give the resistance breakdown', () => {
-            results[0][4].should.equal('shield 10.00 (50%)'.cyan+' ' +'armor 10.00 (50%)'.green)
+            results[0][4].should.equal('shield 10.00 (50%)'.cyan + ' ' + 'armor 10.00 (50%)'.green)
         })
 
         it('should give the resistance capped state', () => {
@@ -159,7 +159,7 @@ describe('Calculating Resistances', () => {
         })
 
         it('should give the total reduction', () => {
-            results[0][2].should.equal('80.00'.red)
+            results[0][2].should.equal('80.00 (80.00%)'.red)
         })
 
         it('should give the damage type', () => {
@@ -167,7 +167,7 @@ describe('Calculating Resistances', () => {
         })
 
         it('should give the resistance breakdown', () => {
-            results[0][4].should.equal('shield 20.00 (25%)'.cyan+' ' +'armor 60.00 (75%)'.green)
+            results[0][4].should.equal('shield 20.00 (25%)'.cyan + ' ' + 'armor 60.00 (75%)'.green)
         })
 
         it('should give the resistance capped state', () => {
@@ -194,7 +194,7 @@ describe('Calculating Resistances', () => {
         })
 
         it('should give the total reduction', () => {
-            results[0][2].should.equal('80.00'.red)
+            results[0][2].should.equal("80.00 (80.00%)".red)
         })
 
         it('should give the damage type', () => {
@@ -202,7 +202,7 @@ describe('Calculating Resistances', () => {
         })
 
         it('should give the resistance breakdown', () => {
-            results[0][4].should.equal('shield 30.00 (38%)'.cyan+' ' +'armor 50.00 (63%)'.green)
+            results[0][4].should.equal('shield 30.00 (38%)'.cyan + ' ' + 'armor 50.00 (63%)'.green)
         })
 
         it('should give the resistance capped state', () => {

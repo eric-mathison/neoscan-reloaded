@@ -1,7 +1,7 @@
 'use strict'
 const colors = require('colors');
 
-module.exports = function(description, baseDamageAmount, classCap) {
+module.exports = function (description, baseDamageAmount, classCap) {
     classCap = classCap || 80
     const reductionColours = {
         shield: 'cyan',
@@ -19,13 +19,12 @@ module.exports = function(description, baseDamageAmount, classCap) {
         Healing: 'yellow'
     }
     const reductions = [];
-    let damageAfterReduction = 0;
     let capReached = false;
     return {
         registerReduction: function (source, damageAfterReduction, totalPercentage) {
-            if(capReached) return;
-            if(totalPercentage >= classCap) {
-                damageAfterReduction = Math.round(baseDamageAmount * (100-classCap)/100)
+            if (capReached) return;
+            if (totalPercentage >= classCap) {
+                damageAfterReduction = Math.round(baseDamageAmount * (100 - classCap) / 100)
                 capReached = true;
             }
             reductions.push({
@@ -33,7 +32,7 @@ module.exports = function(description, baseDamageAmount, classCap) {
                 damageAfterReduction: damageAfterReduction
             })
         },
-        summarise: function(table, dashboard) {
+        summarise: function (table) {
             reductions.reduce((lastReduction, reduction) => {
                 const damageAfterThisReduction = lastReduction - reduction.damageAfterReduction;
                 reduction.reducedDamageBy = damageAfterThisReduction;
@@ -43,19 +42,19 @@ module.exports = function(description, baseDamageAmount, classCap) {
             const reducedDamage = reductions.reduce((total, reduction) => total + reduction.reducedDamageBy, 0);
 
             const reductionsMessage = reductions.map(reduction => {
-                return `${reduction.source} ${reduction.reducedDamageBy.toFixed(2)} (${(reduction.reducedDamageBy/reducedDamage*100).toFixed(0)}%)`[reductionColours[reduction.source]];
+                return `${reduction.source} ${reduction.reducedDamageBy.toFixed(2)} (${(reduction.reducedDamageBy / reducedDamage * 100).toFixed(0)}%)`[reductionColours[reduction.source]];
             }).join(' ');
-            const reductionsToLog = reductions.map(reduction => {
+            reductions.map(reduction => {
                 return {
                     source: reduction.source,
                     total_reduction: reduction.reducedDamageBy.toFixed(2),
-                    percentage: (reduction.reducedDamageBy/reducedDamage*100).toFixed(0)
+                    percentage: (reduction.reducedDamageBy / reducedDamage * 100).toFixed(0)
                 }
             });
             table.push([
-                `${(baseDamageAmount-reducedDamage).toFixed(2)}`[typeColours[description]] || `${(baseDamageAmount-reducedDamage).toFixed(2)}`,
+                `${(baseDamageAmount - reducedDamage).toFixed(2)}`[typeColours[description]] || `${(baseDamageAmount - reducedDamage).toFixed(2)}`,
                 `${baseDamageAmount.toFixed(2)}`[typeColours[description]] || `${baseDamageAmount.toFixed(2)}`,
-                `${reducedDamage.toFixed(2)} (${(reducedDamage/baseDamageAmount*100).toFixed(2)}%)`[typeColours[description]] || `${reducedDamage.toFixed(2)}`,
+                `${reducedDamage.toFixed(2)} (${(reducedDamage / baseDamageAmount * 100).toFixed(2)}%)`[typeColours[description]] || `${reducedDamage.toFixed(2)}`,
                 `${description}`[typeColours[description]] || `${description}`,
                 reductionsMessage,
                 capReached
