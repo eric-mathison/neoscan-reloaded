@@ -11,7 +11,6 @@ module.exports = function (classCap) {
 
     function closeType() {
         if (currentType) {
-            numberOfTypes++;
             currentType.summarise(table);
             currentType = 0;
         }
