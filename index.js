@@ -1,31 +1,41 @@
-'use strict'
-const program = require('commander');
-const watch = require('./analyse/liveScan')().watchLogFile;
-const scanner = require('./analyse/scan')();
+const prompts = require("prompts");
+const app = require("./app");
 
-program
-    .command('watch <name> [path]')
-    .description(`Watches a neocron log file in real-time`)
-    .action(watch.bind(null, program))
+const questions = [
+    {
+        type: "select",
+        name: "mode",
+        message: "Select a mode",
+        choices: [
+            { title: "Real-Time", value: "watch" },
+            { title: "Scan an Existing Log File", value: "scan" },
+        ],
+        initial: 0,
+    },
+    {
+        type: "text",
+        name: "characterName",
+        message: "What is the name of your character?",
+    },
+    {
+        type: "multiselect",
+        name: "options",
+        message: "Select which options you want to filter out (hide)",
+        choices: [
+            { title: "Healing", value: "healing" },
+            { title: "Piercing", value: "piercing" },
+            { title: "Force", value: "force" },
+            { title: "Fire", value: "fire" },
+            { title: "Poison", value: "poison" },
+            { title: "Energy", value: "energy" },
+            { title: "Xray", value: "xray" },
+        ],
+        max: 7,
+        hint: "- Space to select. Return to submit",
+    },
+];
 
-program
-    .command('scan <name> [path]')
-    .description(`Scans an existing neocron log file and exits`)
-    .action(scanner.scan.bind(null, program))
-
-program
-    .command('dumbscan <name> [path]')
-    .description(`Scans an existing neocron log file and exits`)
-    .action(scanner.dumb)
-
-program
-    .option('-h, --healing', 'filter out healing results')
-    .option('-c, --piercing', 'filter out piercing results')
-    .option('-o, --force', 'filter out force results')
-    .option('-f, --fire', 'filter out fire results')
-    .option('-p, --poison', 'filter out poison results')
-    .option('-e, --energy', 'filter out energy results')
-    .option('-x, --xray', 'filter out xray results')
-    .option('--cap [value]', 'overrides cap with value, defaults to 80')
-    .option('--dashboard', 'sends data to kibana')
-    .parse(process.argv)
+(async () => {
+    const response = await prompts(questions);
+    app(response["characterName"], response["mode"], response["options"]);
+})();
