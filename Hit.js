@@ -14,7 +14,7 @@ module.exports = function () {
             "Resistance Breakdown",
             "Capped",
         ],
-        colWidths: [14, 16, 17, 10, 9, 56, 14],
+        colWidths: [14, 16, 17, 10, 9, 60, 14],
     });
 
     function closeType() {

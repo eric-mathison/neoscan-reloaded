@@ -13,10 +13,11 @@ module.exports = function createParser() {
         /Results of this target: .* - ResistanceCap:\s([0-9]+\.[0-9]+)!/
     );
     let currentHit = new Hit();
+    let type = "";
 
     function typeIsFilteredOut(type, options) {
         return options.reduce(
-            (result, filter) => result || filter === type.toLowerCase(),
+            (result, filter) => result || filter.includes(type.toLowerCase()),
             false
         );
     }
@@ -34,7 +35,7 @@ module.exports = function createParser() {
             const newType = newTypeRegex.exec(line);
             if (newType && newType.length) {
                 const damage = parseFloat(newType[1]);
-                let type = newType[2];
+                type = newType[2];
                 if (damage < 0) type = "Healing";
                 let zone = newType[3];
                 switch (zone) {
@@ -62,6 +63,7 @@ module.exports = function createParser() {
 
             const newReduction = newReductionRegex.exec(line);
             if (newReduction && newReduction.length) {
+                if (typeIsFilteredOut(type, options)) return;
                 const damageAfterReduction = parseFloat(newReduction[1]);
                 const ongoingTotalReduction = parseFloat(newReduction[2]);
                 const ongoingTotalPercentage = parseFloat(newReduction[3]);

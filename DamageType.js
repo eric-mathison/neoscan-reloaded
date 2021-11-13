@@ -9,16 +9,22 @@ module.exports = function (description, baseDamageAmount, zone, resistCap) {
     };
     const typeColours = {
         Piercing: "white",
+        Stich: "white",
         Force: "grey",
+        Hieb: "grey",
         Fire: "red",
+        Feuer: "red",
         Energy: "bgBlue",
+        Energie: "bgBlue",
         "X-ray": "cyan",
         "X-Ray": "cyan",
+        Strahlung: "cyan",
         Poison: "green",
+        Gift: "green",
         Healing: "yellow",
+        Heilung: "yellow",
     };
     const reductions = [];
-    let capReached = false;
     let cap = resistCap || 0;
     return {
         registerReduction: function (
@@ -46,6 +52,8 @@ module.exports = function (description, baseDamageAmount, zone, resistCap) {
                 (total, reduction) => total + reduction.reducedDamageBy,
                 0
             );
+
+            // console.log(reductions);
 
             const reductionsMessage = reductions
                 .map((reduction) => {
@@ -78,7 +86,10 @@ module.exports = function (description, baseDamageAmount, zone, resistCap) {
                     (reducedDamage / baseDamageAmount) *
                     100
                 ).toFixed(2)}%)`[typeColours[description]] ||
-                    `${reducedDamage.toFixed(2)}`,
+                    `${reducedDamage.toFixed(2)} (${(
+                        (reducedDamage / baseDamageAmount) *
+                        100
+                    ).toFixed(2)}%)`,
                 `${description}`[typeColours[description]] || `${description}`,
                 `${zone}`[typeColours[description]] || `${zone}`,
                 reductionsMessage,
