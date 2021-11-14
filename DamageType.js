@@ -14,15 +14,14 @@ module.exports = function (description, baseDamageAmount, zone, resistCap) {
         Hieb: "grey",
         Fire: "red",
         Feuer: "red",
-        Energy: "bgBlue",
-        Energie: "bgBlue",
+        Energy: "orange",
+        Energie: "orange",
         "X-ray": "cyan",
         "X-Ray": "cyan",
         Strahlung: "cyan",
         Poison: "green",
         Gift: "green",
         Healing: "yellow",
-        Heilung: "yellow",
     };
     const reductions = [];
     let cap = resistCap || 0;
@@ -52,8 +51,6 @@ module.exports = function (description, baseDamageAmount, zone, resistCap) {
                 (total, reduction) => total + reduction.reducedDamageBy,
                 0
             );
-
-            // console.log(reductions);
 
             const reductionsMessage = reductions
                 .map((reduction) => {

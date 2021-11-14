@@ -3,7 +3,7 @@ const Hit = require("../Hit");
 
 module.exports = function createParser() {
     const newTypeRegex = new RegExp(
-        /Damage:\s(\-?[0-9]+\.[0-9]+)\sTarget\s([\w\-]+)\sHitZone\s([0-3])/
+        /Damage:\s(\-?[0-9]+\.[0-9]+)\sTarget\s([\w\-\s]+)\sHitZone\s([0-3])/
     );
     const newHitRegex = new RegExp(/Local Player:Damage/);
     const newReductionRegex = new RegExp(
@@ -25,15 +25,18 @@ module.exports = function createParser() {
     return {
         parse: function (options, line) {
             if (line.startsWith("Character System: Acceleration ")) return;
-
+            // console.log("reading line: ", line);
             if (newHitRegex.test(line)) {
+                // console.log("hit");
                 currentHit.close();
                 currentHit = new Hit();
+                currentHit.setTimeout();
                 return;
             }
 
             const newType = newTypeRegex.exec(line);
             if (newType && newType.length) {
+                // console.log("newtype");
                 const damage = parseFloat(newType[1]);
                 type = newType[2];
                 if (damage < 0) type = "Healing";
@@ -56,7 +59,9 @@ module.exports = function createParser() {
                     }
                 }
                 if (typeIsFilteredOut(type, options)) return;
+                // console.log("newtype: closingType");
                 currentHit.closeType();
+                // console.log("registering damage type");
                 currentHit.registerType(type, damage, zone);
                 return;
             }
@@ -68,6 +73,7 @@ module.exports = function createParser() {
                 const ongoingTotalReduction = parseFloat(newReduction[2]);
                 const ongoingTotalPercentage = parseFloat(newReduction[3]);
                 const reductionSource = newReduction[4];
+                // console.log("adding new reduction");
                 currentHit.reduceType(
                     reductionSource,
                     damageAfterReduction,

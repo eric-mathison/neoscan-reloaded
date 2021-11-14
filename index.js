@@ -1,5 +1,4 @@
 const prompts = require("prompts");
-const app = require("./app");
 
 const questions = [
     {
@@ -22,7 +21,7 @@ const questions = [
         name: "options",
         message: "Select which options you want to filter out (hide)",
         choices: [
-            { title: "Healing", value: "healing, heilung" },
+            { title: "Healing", value: "healing" },
             { title: "Piercing", value: "piercing, stich" },
             { title: "Force", value: "force, hieb" },
             { title: "Fire", value: "fire, feuer" },
@@ -37,5 +36,6 @@ const questions = [
 
 (async () => {
     const response = await prompts(questions);
+    const app = require("./app");
     app(response["characterName"], response["mode"], response["options"]);
 })();
